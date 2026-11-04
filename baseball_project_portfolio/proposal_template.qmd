@@ -1,0 +1,82 @@
+---
+title: "Predicting Runs Scored Using Epic Statistical Tools"
+subtitle: "STAT 330 Portfolio Project Proposal"
+author: "Hayden Barrett, Spencer Crawford, Rex Green"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    code-summary: "Show code"
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+## Question and audience
+
+We would like to identify which statistics predict runs scored best for a baseball team. We are making this study for front-office executives of baseball teams to help them understand how to identify players that will be useful for their offense. This will allow them to optimize their offseason spending. The response is runs scored per team per season, and the important candidate predictors we are considering are on-base percentage, slugging percentage, and strikeout rate. 
+
+## Data
+
+Our data comes from the Lahman library (`install.packages("Lahman")`, also found at <https://sabr.org/lahman-database/>), using the Teams dataset. 
+The observational unit is one team's statistics over a 162 game season.
+The response variable is the number of runs per team scored over a 162 game season.
+Our candidate predictors areslugging percentage (SLG), on base percentage (OBP),
+strike out rate (K_rate).
+The dimensions of our matrices are $X$ is $150 \times 4$, $Y$ is $150 \times 1$ $\beta$ is $4 x 1$, and $\epsilon$ is $150 \times 1$.
+Collection process and permission to share: these data are publicly accessible and observed over the course of full MLB seasons. There are no representation, measurement, or ethical concerns with this data.
+The data is likely to be able to answer our question because it comes from direct measurements of a teams success over the course of a whole season.
+
+```{r}
+library(tidyverse)
+library(Lahman)
+
+#Creating new columns for Slugging, On Base Perc. and Strikeout Rate
+bb_teams <- Teams |>
+  filter( yearID > 2020) |>
+  mutate(SLG = (H + X2B + 2* X3B + 3* HR) / AB) |>
+  mutate(OBP = (H + HBP + BB) / (AB + HBP + BB + SF)) |>
+  mutate(K_rate = SO / AB)
+```
+
+## Baseline model
+
+```{r}
+#Creating a Linear Model
+bb_team_fit <- lm(R ~ SLG + OBP + K_rate, data = bb_teams)
+summary(bb_team_fit)
+```
+
+Holding all other predictors constant, a one percentage point increase in on-base 
+percentage is associated with an increase in 1.71364 runs over 162 games.
+One opportunity to improve the model would be removing strikeout rate; since there is no significant difference, removing it could improve intepretability and allow executives to focus on the positive rate stats while still retaining some predictive power.
+
+## One useful first look
+
+```{r}
+#Creating a new column that predicts Runs using our fitted model
+bb_teams$fitted <- predict(bb_team_fit)
+
+#Graphing our data
+bb_teams |>
+ggplot() +
+geom_point(aes(x = fitted, y = R)) +
+geom_abline(intercept = 0, slope = 1, color = "dodgerblue", 
+  linetype = "dashed", linewidth = 1) +
+labs(x = "Fitted Values",
+y = "Residuals",
+title = "Fitted vs. Residuals of Epic Baseball Stats data")
+```
+
+The most important pattern we see so far is that the model truly does appear linear. This is important because the model will be easily interpretable for lay audiences, and because it allows us to generate accurate predictions.
+
+## Where the analysis could go
+
+1. We plan on fitting Ridge and LASSO regressions to try to improve prediction. This way, teams will be able to better extrapolate their future run prediction if they acquire players with high on-base or slugging percentages in the offseason. 
+2. We also plan on cross-validating the models that we generate, whether they have Ridge or LASSO. We hope to do this to improve the predictive ability of the models.
+
+## AI disclosure and sources
+
+We used AI to see if multiple linear regression was realistic for baseball and it provided us with a few examples of predictors.  After we used it to help brainstorm if certain predictors would work well in multiple linear regression or not. After that we ensured that our formulas for on-base percentage, slugging percentage, and strikeout rate were correct. We also used it to help build our fitted vs. residuals plot.
