@@ -1,7 +1,7 @@
 ---
-title: "Replace with a specific, informative title"
+title: "Predicting runs scored in MLB with team statistics"
 subtitle: "Replace with one sentence that tells readers why the question matters"
-author: "Replace with all group members' names"
+author: "Hayden Barrett, Spencer Crawford, Rex Green"
 date: last-modified
 description: "Replace with a brief description for link previews."
 ---
