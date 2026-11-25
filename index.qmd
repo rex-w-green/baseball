@@ -4,6 +4,7 @@ subtitle: "An Epic Stats Linear Model Project"
 author: "Barrett H, Crawford S, Green R"
 date: last-modified
 description: "Replace with a brief description for link previews."
+output_dir: "../docs"
 ---
 
 **Narrative word count:** Replace with a number from 750 to 1,000.
