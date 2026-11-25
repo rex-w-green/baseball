@@ -21,7 +21,11 @@ This template suggests one way to tell the story. You may rename, combine, or re
 **Describe and justify a simple course-based baseline regression model. Interpret the result that best establishes the rest of the story, including its direction, magnitude, scale, and uncertainty. Explain one limitation or unresolved pattern that motivates deeper analysis.**
 
 ```{r}
-# Load packages and data, document preparation, and fit the baseline.
+#| include: false
+library(tidyverse)
+library(Lahman)
+library(car)
+
 ```
 
 ```{r}
