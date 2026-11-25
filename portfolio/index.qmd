@@ -1,7 +1,7 @@
 ---
 title: "Predicting runs scored in MLB with team statistics"
 subtitle: "Replace with one sentence that tells readers why the question matters"
-author: "Hayden Barrett, Spencer Crawford, Rex Green"
+author: "Barrett H, Crawford S, Green R"
 date: last-modified
 description: "Replace with a brief description for link previews."
 ---
@@ -29,7 +29,26 @@ library(car)
 ```
 
 ```{r}
-# Show a primary figure or table only if it helps answer the question.
+#| echo: false
+#| warning: false
+bb_teams <- Teams |>
+  filter( yearID > 2020) |>
+  mutate(SLG = (H + X2B + 2* X3B + 3* HR) / AB) |>
+  mutate(OBP = (H + HBP + BB) / (AB + HBP + BB + SF)) |>
+  mutate(K_rate = SO / AB)
+
+bb_team_fit <- lm(R ~ SLG + OBP + K_rate, data = bb_teams)
+bb_teams$fitted <- predict(bb_team_fit)
+
+#Graphing our data
+bb_teams |>
+ggplot() +
+geom_point(aes(x = fitted, y = R)) +
+geom_abline(intercept = 0, slope = 1, color = "dodgerblue", 
+  linetype = "dashed", linewidth = 1) +
+labs(x = "Fitted Values",
+y = "Residuals",
+title = "Fitted vs. Residuals of Epic Baseball Stats data")
 ```
 
 ## Going beyond the baseline
