@@ -4,10 +4,9 @@ subtitle: "An Epic Stats Linear Model Project"
 author: "Barrett H, Crawford S, Green R"
 date: last-modified
 description: "Replace with a brief description for link previews."
-output_dir: "../docs"
 ---
 
-**Narrative word count:** Replace with a number from 750 to 1,000.
+**Narrative word count:** Replace with a number from 750 to 1,000. Checking for render.
 
 ::: {.callout-tip}
 This template suggests one way to tell the story. You may rename, combine, or reorder headings and add, remove, or move code chunks. Use plots, tables, selected model output, and prose in whatever combination best communicates your evidence. Keep every required part easy to find, use no more than four primary figures or tables, and delete this note and all bold prompts before submitting.
