@@ -1,6 +1,6 @@
 ---
-title: "Predicting runs scored in MLB with team statistics"
-subtitle: "Replace with one sentence that tells readers why the question matters"
+title: "Predicting Runs Scored in the MLB With Team Statistics"
+subtitle: "An Epic Stats Linear Model Project"
 author: "Barrett H, Crawford S, Green R"
 date: last-modified
 description: "Replace with a brief description for link previews."
